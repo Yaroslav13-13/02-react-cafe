@@ -5,7 +5,7 @@ import VoteOptions from "../VoteOptions/VoteOptions";
 import VoteStats from "../VoteStats/VoteStats";
 import Notification from "../Notification/Notification";
 
-import { Votes, VoteType } from "../../types/votes";
+import type { Votes, VoteType } from "../../types/votes";
 
 function App() {
   const [votes, setVotes] = useState<Votes>({
@@ -26,8 +26,6 @@ function App() {
   };
 
   const totalVotes = votes.good + votes.neutral + votes.bad;
-  const positiveRate =
-    totalVotes > 0 ? Math.round((votes.good / totalVotes) * 100) : 0;
 
   return (
     <div className={css.app}>
@@ -39,15 +37,7 @@ function App() {
         canReset={totalVotes > 0}
       />
 
-      {totalVotes > 0 ? (
-        <VoteStats
-          votes={votes}
-          totalVotes={totalVotes}
-          positiveRate={positiveRate}
-        />
-      ) : (
-        <Notification />
-      )}
+      {totalVotes > 0 ? <VoteStats votes={votes} /> : <Notification />}
     </div>
   );
 }
